@@ -1,0 +1,21 @@
+:root {
+  --black: #22231b;
+  --white: #706c5a;
+  --purple: #a561f1;
+}
+.grid {
+  width: 200px;
+  height: 400px;
+  background-color: var(--black);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid div {
+  width: 20px;
+  height: 20px;
+}
+
+.tetromino {
+  background-color: var(--purple);
+}
