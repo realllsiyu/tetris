@@ -49,13 +49,26 @@ const theTetrominoes = [
 ];
 
 let currentPosition = 2;
-let current = theTetrominoes[0][0];
+let currentRotation = 0;
+let random = Math.floor(Math.random() * theTetrominoes.length);
+let current = theTetrominoes[random][currentRotation];
 console.log(current);
-console.log(squares);
+
 function draw() {
   current.forEach((index) => {
     squares[currentPosition + index].classList.add("tetromino");
   });
 }
 
-draw();
+function undraw() {
+  current.forEach((index) => {
+    squares[currentPosition + index].classList.remove("tetromino");
+  });
+}
+
+function moveDown() {
+  undraw();
+  currentPosition += width;
+  draw();
+}
+timerId = setInterval(moveDown, 1000);
