@@ -1,7 +1,7 @@
 const grid = document.querySelector(".grid");
 const scoreDisplay = document.querySelector("#score");
 const startBtn = document.querySelector("#start-button");
-let squares = document.querySelectorAll(".grid");
+let squares = Array.from(document.querySelectorAll(".grid div"));
 const width = 10;
 
 //The Tetrominoes
@@ -48,8 +48,10 @@ const theTetrominoes = [
   iTetromino,
 ];
 
-let currentPosition = 4;
+let currentPosition = 2;
 let current = theTetrominoes[0][0];
+console.log(current);
+console.log(squares);
 function draw() {
   current.forEach((index) => {
     squares[currentPosition + index].classList.add("tetromino");
