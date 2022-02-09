@@ -4,7 +4,7 @@ const startBtn = $("#start-button");
 let squares = Array.from(document.querySelectorAll(".grid div"));
 const width = 10;
 
-//The Tetrominoes
+//define tetrominoes
 const lTetromino = [
   [1, width + 1, width * 2 + 1, 2],
   [width, width + 1, width + 2, width * 2 + 2],
@@ -55,7 +55,7 @@ let random = Math.floor(Math.random() * theTetrominoes.length);
 let current = theTetrominoes[random][currentRotation];
 console.log(current);
 
-//move the tetromino
+//move the tetromino down
 function draw() {
   current.forEach((index) => {
     squares[currentPosition + index].classList.add("tetromino");
@@ -76,7 +76,8 @@ function moveDown() {
 }
 timerId = setInterval(moveDown, 500);
 
-//if one block of the tetromino reaches the bottom, freeze the entire tetromino and draw the next one
+//if one block of the tetromino reaches the bottom or another tetromino,
+//freeze the entire tetromino and draw a new one
 function freeze() {
   if (
     current.some((index) =>
@@ -93,3 +94,57 @@ function freeze() {
     draw();
   }
 }
+
+//move the tetromine to the left and right
+function moveLeft() {
+  undraw();
+  //prevent tetrominoes from moving out of the frame
+  const atLeftEdge = current.some(
+    (index) => (currentPosition + index) % 10 == 0
+  );
+  if (!atLeftEdge) {
+    currentPosition -= 1;
+  }
+  //prevent tetrominoes from moving into another tetromino
+  if (
+    current.some((index) =>
+      squares[currentPosition + index].classList.contains("taken")
+    )
+  ) {
+    currentPosition += 1;
+  }
+  draw();
+}
+
+function moveRight() {
+  undraw();
+  //prevent tetrominoes from moving out of the frame
+  const atRightEdge = current.some(
+    (index) => (currentPosition + index) % width == width - 1
+  );
+  if (!atRightEdge) {
+    currentPosition += 1;
+  }
+  //prevent tetrominoes from moving into another tetromino
+  if (
+    current.some((index) =>
+      squares[currentPosition + index].classList.contains("taken")
+    )
+  ) {
+    currentPosition -= 1;
+  }
+  draw();
+}
+
+//assign functions to keycodes
+function control(e) {
+  if (e.keycode == 37) {
+    moveLeft();
+  } else if (e.keyCode === 39) {
+    moveRight();
+  } else if (e.keyCode === 40) {
+    moveDown();
+  }
+}
+
+document.addEventListener("keyup", control);
