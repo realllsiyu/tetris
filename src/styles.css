@@ -3,6 +3,11 @@
   --white: #706c5a;
   --purple: #a561f1;
 }
+
+.container {
+  display: flex;
+}
+
 .grid {
   width: 200px;
   height: 400px;
@@ -18,4 +23,18 @@
 
 .tetromino {
   background-color: var(--purple);
+}
+
+.next {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--white);
+  margin-left: 50px;
+}
+
+.next div {
+  height: 20px;
+  width: 20px;
 }
