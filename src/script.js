@@ -7,8 +7,9 @@ let nextRandom = 0;
 const displaySquares = Array.from($(".next div"));
 const displayWidth = 4;
 let displayIndex = 0;
+let score = 0;
 
-//define tetrominoes
+//define tetrominoes in different directions
 const lTetromino = [
   [1, width + 1, width * 2 + 1, 2],
   [width, width + 1, width + 2, width * 2 + 2],
@@ -95,20 +96,21 @@ function freeze() {
     current = theTetrominoes[random][currentRotation];
     draw();
     displayShape();
+    addScore();
   }
 }
 
-//move the tetromine to the left and right
+//move the tetromine to the left or right
 function moveLeft() {
   undraw();
-  //prevent tetrominoes from moving out of the frame
+  //prevent tetrominoes from moving out of the grid
   const atLeftEdge = current.some(
     (index) => (currentPosition + index) % 10 == 0
   );
   if (!atLeftEdge) {
     currentPosition -= 1;
   }
-  //prevent tetrominoes from moving into another tetromino
+  //prevent one tetromino from moving into another
   if (
     current.some((index) =>
       squares[currentPosition + index].classList.contains("taken")
@@ -128,7 +130,7 @@ function moveRight() {
   if (!atRightEdge) {
     currentPosition += 1;
   }
-  //prevent tetrominoes from moving into another tetromino
+  //prevent one tetromino from moving into another
   if (
     current.some((index) =>
       squares[currentPosition + index].classList.contains("taken")
@@ -166,6 +168,7 @@ document.addEventListener("keyup", control);
 
 //display the coming tetrominoes
 const nextTetrominoes = [
+  //in a smaller grid
   [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
   [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //zTetromino
   [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
@@ -182,11 +185,14 @@ function displayShape() {
   });
 }
 
+//start/pause the game
 $("#start-button").on("click", function () {
+  //stop the timer
   if (timerId) {
     clearInterval(timerId);
     timerId = null;
   } else {
+    //strat the timer
     draw();
     timerId = setInterval(moveDown, 1000);
     nextRandom = Math.floor(Math.random() * theTetrominoes.length);
@@ -196,7 +202,8 @@ $("#start-button").on("click", function () {
 
 //scores
 function addScore() {
-  for (var i = 0; i < 999; i++) {
+  for (var i = 0; i < 199; i += width) {
+    //define row
     const row = [
       i,
       i + 1,
@@ -209,11 +216,19 @@ function addScore() {
       i + 8,
       i + 9,
     ];
+    //if every sqaure in a row is taken
     if (row.every((index) => squares[index].classList.contains("taken"))) {
+      //add score
       score += 10;
-      console.log(score);
       $("#score").text(score);
-      row.forEach(index=>squares[index].classList.remove("taken"))
+      //remove this row
+      row.forEach((index) => {
+        squares[index].classList.remove("taken");
+        squares[index].classList.remove("tetromino");
+      });
+      //add a new row
+      const squaresRemoved = squares.splice(i, width);
+      squares = squaresRemoved.concat(squares);
     }
   }
-
+}
