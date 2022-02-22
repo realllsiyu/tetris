@@ -1,4 +1,4 @@
-const grid = $(".grid");
+const grid = document.querySelector(".grid");
 const scoreDisplay = $("#score");
 let timerId;
 let squares = Array.from($(".grid div"));
@@ -202,8 +202,7 @@ $("#start-button").on("click", function () {
 
 //scores
 function addScore() {
-  for (var i = 0; i < 199; i += width) {
-    //define row
+  for (let i = 0; i < 199; i += width) {
     const row = [
       i,
       i + 1,
@@ -216,19 +215,30 @@ function addScore() {
       i + 8,
       i + 9,
     ];
-    //if every sqaure in a row is taken
+
     if (row.every((index) => squares[index].classList.contains("taken"))) {
-      //add score
       score += 10;
-      $("#score").text(score);
-      //remove this row
+      scoreDisplay.innerHTML = score;
       row.forEach((index) => {
         squares[index].classList.remove("taken");
         squares[index].classList.remove("tetromino");
+        squares[index].style.backgroundColor = "";
       });
-      //add a new row
       const squaresRemoved = squares.splice(i, width);
       squares = squaresRemoved.concat(squares);
+      squares.forEach((cell) => grid.appendChild(cell));
     }
+  }
+}
+
+//game over
+function gameOver() {
+  if (
+    current.some((index) =>
+      squares[currentPosition + index].classList.contains("taken")
+    )
+  ) {
+    scoreDisplay.innerHTML = "end";
+    clearInterval(timerId);
   }
 }
