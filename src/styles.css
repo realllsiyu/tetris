@@ -1,11 +1,19 @@
 :root {
-  --black: #22231b;
-  --white: #706c5a;
+  --black: #34352d;
+  --white: #b8b5ab;
   --purple: #a561f1;
+}
+
+body {
+  background-color: var(--white);
 }
 
 .container {
   display: flex;
+}
+
+button {
+  margin: 20px;
 }
 
 .grid {
@@ -14,6 +22,7 @@
   background-color: var(--black);
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
 }
 
 .grid div {
@@ -30,8 +39,8 @@
   height: 80px;
   display: flex;
   flex-wrap: wrap;
-  background-color: var(--white);
-  margin-left: 50px;
+  background-color: var(--black);
+  margin: 0px;
 }
 
 .next div {
