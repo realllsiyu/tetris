@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="src/styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/css-doodle@0.25.1/css-doodle.min.js"></script>
     <title>Tetris</title>
   </head>
   <body>
-    <h3>Score:<span id="score"></span></h3>
+    <div class="score-display">
+      <h3>Score:<span id="score"></span></h3>
+    </div>
     <button id="start-button">Start/Pause</button>
     <div class="container">
       <div class="grid">
@@ -244,6 +247,7 @@
         <div></div>
       </div>
     </div>
+
     <script src="src/script.js"></script>
   </body>
 </html>
