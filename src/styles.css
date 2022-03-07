@@ -51,7 +51,7 @@ button {
   height: 80px;
   display: flex;
   flex-wrap: wrap;
-  background-color: var(--black);
+  background-color: rgba(192, 237, 252, 0.5);
   margin: 0px;
 }
 
